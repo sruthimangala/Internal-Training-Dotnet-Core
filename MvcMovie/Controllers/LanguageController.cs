@@ -54,7 +54,7 @@ namespace MvcMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Code")] Language language)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Language language)
         {
             if (ModelState.IsValid)
             {
@@ -140,7 +140,7 @@ namespace MvcMovie.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var language = await _context.Language.FindAsync(id);
-            _context.Language.Remove(language);
+            _context.Language.Remove(Language);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
