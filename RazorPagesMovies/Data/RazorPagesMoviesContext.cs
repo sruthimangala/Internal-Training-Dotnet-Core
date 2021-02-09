@@ -14,6 +14,7 @@ namespace RazorPagesMovies.Data
         {
         }
         //table creation
+        //create Movie table
         public DbSet<RazorPagesMovie.Models.Movie> Movie { get; set; }
     }
 }

@@ -9,9 +9,14 @@ namespace MvcMovie.Data
             : base(options)
         {
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<Movie> Movie { get; set; }
         public DbSet<Director> Director { get; set; }
         public DbSet<Language> Language { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Movie> Movies { get; set; }
     }
 }
