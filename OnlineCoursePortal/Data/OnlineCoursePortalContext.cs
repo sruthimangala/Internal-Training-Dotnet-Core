@@ -19,6 +19,7 @@ namespace OnlineCoursePortal.Data
         public DbSet<StudentDetails> StudentDetails { get; set; }
         public DbSet<Faculty> Faculty { get; set; }        
         public DbSet<OnlineCoursePortal.Models.User> User { get; set; }
+        public DbSet<OnlineCoursePortal.Models.Login> Login { get; set; }
 
     }
 }
