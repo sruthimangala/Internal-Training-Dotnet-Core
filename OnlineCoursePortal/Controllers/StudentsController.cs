@@ -22,7 +22,8 @@ namespace OnlineCoursePortal.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Student.ToListAsync());
+            var onlineCoursePortalContext = _context.Student.Include(s => s.Course);
+            return View(await onlineCoursePortalContext.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -34,6 +35,7 @@ namespace OnlineCoursePortal.Controllers
             }
 
             var student = await _context.Student
+                .Include(s => s.Course)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -46,6 +48,7 @@ namespace OnlineCoursePortal.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
+            ViewData["CourseId"] = new SelectList(_context.Course, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace OnlineCoursePortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StudentName")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,StudentName,CourseId")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace OnlineCoursePortal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CourseId"] = new SelectList(_context.Course, "Id", "Id", student.CourseId);
             return View(student);
         }
 
@@ -78,6 +82,7 @@ namespace OnlineCoursePortal.Controllers
             {
                 return NotFound();
             }
+            ViewData["CourseId"] = new SelectList(_context.Course, "Id", "Id", student.CourseId);
             return View(student);
         }
 
@@ -86,7 +91,7 @@ namespace OnlineCoursePortal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,StudentName")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StudentName,CourseId")] Student student)
         {
             if (id != student.Id)
             {
@@ -113,6 +118,7 @@ namespace OnlineCoursePortal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CourseId"] = new SelectList(_context.Course, "Id", "Id", student.CourseId);
             return View(student);
         }
 
@@ -125,6 +131,7 @@ namespace OnlineCoursePortal.Controllers
             }
 
             var student = await _context.Student
+                .Include(s => s.Course)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {

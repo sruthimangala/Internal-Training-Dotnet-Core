@@ -12,6 +12,7 @@ namespace OnlineCoursePortal.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+           
         }
         public DbSet<Course> Course { get; set; }
         public DbSet<Student> Student { get; set; }

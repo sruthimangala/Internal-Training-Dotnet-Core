@@ -2,7 +2,7 @@
 
 namespace OnlineCoursePortal.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialUpdate1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
