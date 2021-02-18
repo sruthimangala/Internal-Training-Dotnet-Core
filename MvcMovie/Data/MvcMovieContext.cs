@@ -17,6 +17,8 @@ namespace MvcMovie.Data
         public DbSet<Director> Director { get; set; }
         public DbSet<Language> Language { get; set; }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieDetails> MovieDetails { get; set; }
+        
+
     }
 }

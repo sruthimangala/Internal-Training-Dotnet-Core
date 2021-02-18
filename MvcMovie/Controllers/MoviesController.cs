@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MvcMovie.Data;
 using MvcMovie.Models;
 
@@ -33,14 +34,15 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var moviedetails = await _context.Movie.Include(T=>T.Details)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+          
+            if (moviedetails == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(moviedetails);
         }
 
         // GET: Movies/Create

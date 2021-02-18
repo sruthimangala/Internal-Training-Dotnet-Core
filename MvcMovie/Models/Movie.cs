@@ -14,7 +14,13 @@ namespace MvcMovie.Models
         public DateTime ReleaseDate { get; set; }
       
         public virtual Genre Genre { get; set; }
-
+       
         public decimal Price { get; set; }
+        public MovieDetails Details
+        { get; set; }
+        
+        public int DetailsId
+        { get; set; }
+        public Director DirectorInfo { get; set; }
     }
 }

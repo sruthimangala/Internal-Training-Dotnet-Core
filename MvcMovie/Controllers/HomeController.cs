@@ -20,6 +20,7 @@ namespace MvcMovie.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Test info");
             return View();
         }
 

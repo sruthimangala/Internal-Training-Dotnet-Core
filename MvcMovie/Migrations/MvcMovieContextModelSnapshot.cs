@@ -74,6 +74,12 @@ namespace MvcMovie.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("DetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DirectorInfoId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
@@ -88,23 +94,70 @@ namespace MvcMovie.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DetailsId")
+                        .IsUnique();
+
+                    b.HasIndex("DirectorInfoId");
+
                     b.HasIndex("GenreId");
 
                     b.ToTable("Movie");
                 });
 
+            modelBuilder.Entity("MvcMovie.Models.MovieDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MovieDetails");
+                });
+
             modelBuilder.Entity("MvcMovie.Models.Movie", b =>
                 {
+                    b.HasOne("MvcMovie.Models.MovieDetails", "Details")
+                        .WithOne("Movie")
+                        .HasForeignKey("MvcMovie.Models.Movie", "DetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MvcMovie.Models.Director", "DirectorInfo")
+                        .WithMany("Movies")
+                        .HasForeignKey("DirectorInfoId");
+
                     b.HasOne("MvcMovie.Models.Genre", "Genre")
                         .WithMany("Movies")
                         .HasForeignKey("GenreId");
 
+                    b.Navigation("Details");
+
+                    b.Navigation("DirectorInfo");
+
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("MvcMovie.Models.Director", b =>
+                {
+                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("MvcMovie.Models.Genre", b =>
                 {
                     b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("MvcMovie.Models.MovieDetails", b =>
+                {
+                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }
